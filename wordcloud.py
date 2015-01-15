@@ -90,6 +90,8 @@ mergedClean['size'] = mergedClean['tokens'].apply(len).values
 plt.hist(mergedClean['size'].values, bins= range(0, 100, 1), weights = [1/len(mergedClean['size'])]*len(mergedClean['size']))
 
 # some wordcounts
+allwords = wordcount(mergedClean['tokens'][mergedClean['size'] > 1])
+allwords.to_csv('/home/roms/Desktop/Telecom/P2/Visualization/Projet/GitHub/dream-visualization/wordcount.csv')
 males = wordcount(mergedClean['tokens'][(mergedClean['gender'] == 'Male') & (mergedClean['size'] > 1)])
 females = wordcount(mergedClean['tokens'][(mergedClean['gender'] == 'Female') & (mergedClean['size'] > 1)])
 deuxmots = wordcount(mergedClean['tokens'][(mergedClean['size'] == 2)])
