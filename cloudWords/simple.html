@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="../lib/d3/d3.js"></script>
+<script src="../d3.layout.cloud.js"></script>
+<script>
+  var fill = d3.scale.category10();
+  var truc = [
+        "Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this", "dream", "cat", "Lol", "friend", "family","than","than","than","than","than","than","than",
+		"than","than","than","than","than","than","than","than","than","than","than","than","than","than","than"];
+	var plop = "";
+	var count = 0;
+	for(var i=0;i<truc.length;i++){
+		if(truc[i] == "than"){
+			plop += " "+truc[i];
+			count ++;
+		}
+	} 
+	ar=["than","cat","world"]
+  
+  d3.layout.cloud().size([300, 300])
+      .words(truc.map(function(d) {
+        return {text: d, size: 10 + Math.random() * 90};
+      }))
+      .padding(1)
+      .rotate(function() { return ~~(Math.random() * 2) * 90; })
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw)
+      .start();
+
+  function draw(words) {
+    d3.select("body").append("svg")
+        .attr("width", 300)
+        .attr("height", 300)
+      .append("g")
+        .attr("transform", "translate(150,150)")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) {
+			var arraycontainstest = (ar.indexOf(d.text.toLowerCase()) > -1);
+			if(arraycontainstest){
+				return fill(0);
+			}
+			else if(i%10!=0){
+				return fill(i); 
+			}
+			else{}				
+		})
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+  }
+</script>
