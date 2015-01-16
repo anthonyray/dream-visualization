@@ -6,14 +6,13 @@ Created on Fri Jan  9 15:39:08 2015
 """
 
 import pandas as pd
-import numpy as np
 from matplotlib import pyplot as plt
-import math
 import nltk
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 from nltk.stem import WordNetLemmatizer
-import math
+from scipy.interpolate import interp1d
+
 
 # loading files
 file = '/home/roms/Desktop/Telecom/P2/Visualization/Projet/Data/reves.csv'
@@ -64,7 +63,7 @@ data['size'] = data['text'].apply(lambda x : len(str(x)))
 
 # some facts about data
 plt.title('Nombre de mots par rêve')
-plt.hist(data['size'].values, bins= range(0, 1000, 1000), weights = [1/len(data['size'])]*len(data['size']))
+plt.hist(data['size'].values, bins= range(0, 100, 1), weights = [1/len(data['size'])]*len(data['size']))
 
 # we add tokens
 data['tokens'] = data['text']
@@ -74,11 +73,6 @@ data['tokens'] = data['tokens'].apply(applyLemma)
 data['tokens'] = data['tokens'].apply(filterStopWords)
 data['tokens'] = data['tokens'].apply(filterStopWords2)
 data['tokens'] = data['tokens'].apply(filterPunctuation)
-# data['tokens'] = data['tokens'].apply(filterStopWords)
-
-# some wordcount
-wc1 = wordcount(data['tokens'][data['questionid'] == 'Q15'])
-wc2 = wordcount(data['tokens'][data['surveyid'] == 'harris_2012'])
 
 # scraping file merge
 scrap = pd.DataFrame.from_csv(scraping, sep = ',')
@@ -89,16 +83,31 @@ mergedClean = merged.dropna(how = 'any', subset = ['gender', 'age', 'marital_sta
 mergedClean['size'] = mergedClean['tokens'].apply(len).values
 plt.hist(mergedClean['size'].values, bins= range(0, 100, 1), weights = [1/len(mergedClean['size'])]*len(mergedClean['size']))
 
-# some wordcounts
+# see tokens for some size
+mergedClean['tokens'][mergedClean['size'] == 2]
+
+# output one wordcount
 allwords = wordcount(mergedClean['tokens'][mergedClean['size'] > 1])
+
+newMin = 1
+newMax = 100
+actualMin = allwords.min()
+actualMax = allwords.max()
+convertScale = interp1d([actualMin, actualMax] ,[newMin, newMax])
+allwords = pd.DataFrame(allwords, columns = ['values'])
+allwords['scaled'] = pd.DataFrame(convertScale(allwords), index = allwords.index)
 allwords.to_csv('/home/roms/Desktop/Telecom/P2/Visualization/Projet/GitHub/dream-visualization/wordcount.csv')
+plt.plot(allwords['values'][:100])
+plt.plot(allwords['scaled'][:100])
+
+
+# some wordcounts
+wc1 = wordcount(data['tokens'][data['questionid'] == 'Q15'])
+wc2 = wordcount(data['tokens'][data['surveyid'] == 'harris_2012'])
 males = wordcount(mergedClean['tokens'][(mergedClean['gender'] == 'Male') & (mergedClean['size'] > 1)])
 females = wordcount(mergedClean['tokens'][(mergedClean['gender'] == 'Female') & (mergedClean['size'] > 1)])
 deuxmots = wordcount(mergedClean['tokens'][(mergedClean['size'] == 2)])
 lucid = wordcount(data['tokens'][data['personid'].apply(lambda x : 'lucid' in x)])
-
-# see tokens for some size
-mergedClean['tokens'][mergedClean['size'] == 2]
 
 # see distribution of age for a given word
 word = 'love'
