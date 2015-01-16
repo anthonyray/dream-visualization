@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<style>
+body{
+height:100%;
+width:100%;
+}
+#wordcloud{
+margin:100px;
+}
+
+.word:hover{
+	fill: yellow;
+}
+</style>
 <body>
+
+<div id="wordcloud"></div>
+
 <script src="../lib/d3/d3.js"></script>
 <script src="../d3.layout.cloud.js"></script>
+<script src="table1.js"></script>
+<script src="table2.js"></script>
+<script src="table3.js"></script>
+
 <script>
-  var fill = d3.scale.category10();
-  var truc = [
-        "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this", "dream", "cat", "Lol", "friend", "family","than","than","than","than","than","than","than",
-		"than","than","than","than","than","than","than","than","than","than","than","than","than","than","than"];
-	var plop = "";
-	var count = 0;
-	for(var i=0;i<truc.length;i++){
-		if(truc[i] == "than"){
-			plop += " "+truc[i];
-			count ++;
-		}
-	} 
+	//Color scale for d3
+	var fill = d3.scale.category10();
+	
+	//var truc = ["than","cat","world","plop","lol"];
+	//var cooc = [1.0,20.5,10,4,100]
+	var truc = [];
+	for(var i=0;i<3000;i++){
+		truc[i] = tableWords[i];
+	}
+	var cooc = [];
+	for(var j=0;j<3000;j++){
+		cooc[j] = tableScale[j];
+	}
+
 	ar=["than","cat","world"]
   
-  d3.layout.cloud().size([300, 300])
+  //Configuration of the cloud
+  d3.layout.cloud().size([1000, 1000])
       .words(truc.map(function(d) {
-        return {text: d, size: 10 + Math.random() * 90};
+        return {text: d, size: 1+cooc[truc.indexOf(d)]};
       }))
       .padding(1)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
@@ -38,16 +52,20 @@
       .on("end", draw)
       .start();
 
+  //Drawing function
   function draw(words) {
-    d3.select("body").append("svg")
-        .attr("width", 300)
-        .attr("height", 300)
+    d3.select("#wordcloud").append("svg")
+        .attr("width", 1000)
+        .attr("height", 1000)
       .append("g")
-        .attr("transform", "translate(150,150)")
+        .attr("transform", "translate(500,500)")
       .selectAll("text")
         .data(words)
       .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
+		//------------------------------
+        .on("click", function(e) { alert(e.text) })
+		//-------------------------------------
+		.style("font-size", function(d) { return d.size + "px"; })
         .style("font-family", "Impact")
         .style("fill", function(d, i) {
 			var arraycontainstest = (ar.indexOf(d.text.toLowerCase()) > -1);
