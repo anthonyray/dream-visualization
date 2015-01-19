@@ -13,7 +13,6 @@ from wordcloud import WordCloud
 from nltk.stem import WordNetLemmatizer
 from scipy.interpolate import interp1d
 
-
 # loading files
 file = '/home/roms/Desktop/Telecom/P2/Visualization/Projet/Data/reves.csv'
 scraping = '/home/roms/Desktop/Telecom/P2/Visualization/Projet/GitHub/dream-visualization/dreamer_DB.csv'
@@ -34,15 +33,15 @@ def filterStopWords2(wordList):
 def applyLemma(wordList):
     for num, word in enumerate(wordList):
         wordnet_lemmatizer = WordNetLemmatizer()
+        # applies lemmatizer ofr both words and verbs
         wordList[num] = wordnet_lemmatizer.lemmatize(word, pos='v')
+        wordList[num] = wordnet_lemmatizer.lemmatize(wordList[num], pos='n')
     return wordList
 
 def wordcount(series):
     # words are gathered in a single list
     series = [item for sublist in series for item in sublist]
     # punctuation and stopwords are filtered
-    series = filterStopWords(series)
-    series = filterPunctuation(series)
     words = pd.DataFrame(series)
     return words[0].value_counts(sort = True, ascending = False)
 
@@ -54,6 +53,13 @@ def seriesToString(series):
         result = result + (word + ' ') * times[num]
     return result
 
+def bigramsCount(series):
+    # TO IMPLEMENT
+    return 0
+
+def trigramsCount(series):
+    # TO IMPLEMENT
+    return 0
 
 # mining
 data['questionid'].value_counts() # 27 questions
@@ -83,9 +89,6 @@ mergedClean = merged.dropna(how = 'any', subset = ['gender', 'age', 'marital_sta
 mergedClean['size'] = mergedClean['tokens'].apply(len).values
 plt.hist(mergedClean['size'].values, bins= range(0, 100, 1), weights = [1/len(mergedClean['size'])]*len(mergedClean['size']))
 
-# see tokens for some size
-mergedClean['tokens'][mergedClean['size'] == 2]
-
 # output one wordcount
 allwords = wordcount(mergedClean['tokens'][mergedClean['size'] > 1])
 
@@ -100,6 +103,9 @@ allwords.to_csv('/home/roms/Desktop/Telecom/P2/Visualization/Projet/GitHub/dream
 plt.plot(allwords['values'][:100])
 plt.plot(allwords['scaled'][:100])
 
+# add tags, JJ = adjectif, NN = nom, RB = adverb, CD = cardinal, IN = preposition, 
+allwords['tag'] = pd.DataFrame(allwords.index, index = allwords.index)[0].apply(lambda word : nltk.pos_tag([word])[0][1])
+allwords['tag'].value_counts()
 
 # some wordcounts
 wc1 = wordcount(data['tokens'][data['questionid'] == 'Q15'])
@@ -117,7 +123,7 @@ plt.hist(test[variable].values, bins= range(0, 100, 1), weights = [1/len(test[va
 plt.hist(test[variable].values, bins = ['Male', 'Female'])
 
 # plot wordcloud
-reves = lucid
+reves = allwords['scaled']
 wordcloud = WordCloud().generate(seriesToString(reves))
 plt.imshow(wordcloud)
 plt.axis("off")
