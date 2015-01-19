@@ -32,16 +32,14 @@ def filterStopWords2(wordList):
 
 def applyLemma(wordList):
     for num, word in enumerate(wordList):
-        wordnet_lemmatizer = WordNetLemmatizer()
         # applies lemmatizer ofr both words and verbs
-        wordList[num] = wordnet_lemmatizer.lemmatize(word, pos='v')
-        wordList[num] = wordnet_lemmatizer.lemmatize(wordList[num], pos='n')
+        wordList[num] = WordNetLemmatizer().lemmatize(wordList[num], pos='v')
+        wordList[num] = WordNetLemmatizer().lemmatize(wordList[num], pos='n')
     return wordList
 
 def wordcount(series):
-    # words are gathered in a single list
+    # words are gathered in a single list and then a count is performed
     series = [item for sublist in series for item in sublist]
-    # punctuation and stopwords are filtered
     words = pd.DataFrame(series)
     return words[0].value_counts(sort = True, ascending = False)
 
@@ -53,13 +51,13 @@ def seriesToString(series):
         result = result + (word + ' ') * times[num]
     return result
 
-def bigramsCount(series):
-    # TO IMPLEMENT
-    return 0
+def bigramCount(series):
+    # words are gathered in a single list and then a count is performed
+    series = [item for sublist in series for item in sublist]
+    words = pd.DataFrame(series)
+    words = (words[0] + ' ' + words[1])
+    return words.value_counts(sort = True, ascending = False)
 
-def trigramsCount(series):
-    # TO IMPLEMENT
-    return 0
 
 # mining
 data['questionid'].value_counts() # 27 questions
@@ -71,14 +69,15 @@ data['size'] = data['text'].apply(lambda x : len(str(x)))
 plt.title('Nombre de mots par rêve')
 plt.hist(data['size'].values, bins= range(0, 100, 1), weights = [1/len(data['size'])]*len(data['size']))
 
-# we add tokens
+# we add tokens and bigrams
 data['tokens'] = data['text']
 data['tokens'] = data['tokens'].fillna('').apply(lambda x : x.lower()).apply(lambda word : word.replace('\'s', ''))
 data['tokens'] = data['tokens'].apply(nltk.word_tokenize)
-data['tokens'] = data['tokens'].apply(applyLemma)
+data['tokens'] = data['tokens'].apply(filterPunctuation)
+data['tokens'] = data['tokens'].apply(applyLemma) # slow!
 data['tokens'] = data['tokens'].apply(filterStopWords)
 data['tokens'] = data['tokens'].apply(filterStopWords2)
-data['tokens'] = data['tokens'].apply(filterPunctuation)
+data['bigrams'] = data['tokens'].apply(lambda text : list(nltk.bigrams(text)))
 
 # scraping file merge
 scrap = pd.DataFrame.from_csv(scraping, sep = ',')
@@ -91,6 +90,7 @@ plt.hist(mergedClean['size'].values, bins= range(0, 100, 1), weights = [1/len(me
 
 # output one wordcount
 allwords = wordcount(mergedClean['tokens'][mergedClean['size'] > 1])
+allbigrams = bigramCount(mergedClean['bigrams'][mergedClean['size'] > 1])
 
 newMin = 1
 newMax = 100
