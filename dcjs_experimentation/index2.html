@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/dcjs/dc.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <div id="chart-line-hitsperday"></div>
+    <div id="chart-ring-year"></div>
+
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/crossfilter/crossfilter.js"></script>
+    <script src="bower_components/dcjs/dc.js"></script>
+    <script>
+
+    d3.csv("data/wordcount.csv",function(data){
+
+      var ndx = crossfilter(data);
+      var wordDim = ndx.dimension(function(data){ return data.age;});
+
+      var words = wordDim.group().reduceSum(function(data) { return data.values})
+
+
+    });
+
+    data.forEach(function(d) {
+      d.date = parseDate(d.date);
+      d.total= d.http_404+d.http_200+d.http_302;
+      d.Year=d.date.getFullYear();
+    });
+
+    print_filter("data");
+
+    var dateDim = ndx.dimension(function(d) {return d.date;});
+    var hits = dateDim.group().reduceSum(function(d) {return d.total;});
+
+    var yearDim  = ndx.dimension(function(d) {return +d.Year;});
+    var year_total = yearDim.group().reduceSum(function(d) {return d.total;});
+
+    var status_200=dateDim.group().reduceSum(function(d) {return d.http_200;});
+    var status_302=dateDim.group().reduceSum(function(d) {return d.http_302;});
+    var status_404=dateDim.group().reduceSum(function(d) {return d.http_404;});
+
+    var minDate = dateDim.bottom(1)[0].date;
+    var maxDate = dateDim.top(1)[0].date;
+
+    var hitslineChart  = dc.lineChart("#chart-line-hitsperday");
+
+    hitslineChart
+    .width(500).height(200)
+    .dimension(dateDim)
+    .group(status_200,"200")
+    .stack(status_302,"302")
+    .stack(status_404,"404")
+    .renderArea(true)
+    .x(d3.time.scale().domain([minDate,maxDate]))
+    .brushOn(false)
+    .legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
+    .yAxisLabel("Hits per day");
+
+
+
+    var yearRingChart   = dc.pieChart("#chart-ring-year");
+    yearRingChart
+    .width(150).height(150)
+    .dimension(yearDim)
+    .group(year_total)
+    .innerRadius(30);
+
+    dc.renderAll();
+
+    </script>
+  </body>
+</html>
