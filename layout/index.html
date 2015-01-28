@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Dream Visualization</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <div class="loading-screen">
+
+
+      <h1> DREAM VISUALIZATION </h1>
+      <h3> Loading ...</h3>
+        <span class="loader"><span class="loader-inner"></span></span>
+
+    </div>
+    <div class="panel panel-right">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <br>
+            <div id="compareSwitch" class="togglebutton">
+                <label>
+                  <input type="checkbox" > Compare mode
+                </label>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="panel panel-left">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+  <script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $.material.init();
+
+      });
+  </script>
+  <script charset="utf-8">
+    $(document).ready(function(){
+
+      ////setTimeout(function(){console.log("hello");},3000);
+      setTimeout(function(){$('.loading-screen').toggleClass('visible')},500);
+
+      $('#compareSwitch input[type="checkbox"]').change(function(ev) {
+
+        $(".panel.panel-left").toggleClass("visible");
+
+      });
+
+    });
+  </script>
+  </body>
+</html>
