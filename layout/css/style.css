@@ -4,8 +4,8 @@
   height : 100%;
   background : #242730;
   z-index : 10000;
-  transition : all 1s ease-in-out;
-  -webkit-transition :  all 1s ease-in-out;
+  transition : all 0.5s ease-in-out;
+  -webkit-transition :  all 0.5s ease-in-out;
   top : 0%;
   text-align : center;
 }
@@ -132,11 +132,14 @@
 }
 
 .panel{
+
   width : 20%;
   height : 100%;
   position : fixed;
   background-color : #262A33;
   color : white;
+  text-transform : uppercase;
+  font-size : 0.8em;
 }
 
 .panel-right{
@@ -196,7 +199,7 @@
 
 .og-close:hover::before,
 .og-close:hover::after {
-    background: #333;
+    background: #1abc9c;
 }
 
 
@@ -209,7 +212,7 @@
   transition : all 0.3s ease-in-out;
   -webkit-transition :  all 0.3s ease-in-out;
   bottom : -100%;
-  text-align : center;
+
   padding : 2px 5px 5px 2px;
 }
 
