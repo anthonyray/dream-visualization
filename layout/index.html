@@ -20,7 +20,12 @@
         <div class="row">
           <div class="col-xs-12">
             <br>
-            <div id="compareSwitch" class="togglebutton">
+            <div id="leftPanelSwitch" class="togglebutton">
+                <label>
+                  <input type="checkbox" > Compare mode
+                </label>
+            </div>
+            <div id="bottomPanelSwitch" class="togglebutton">
                 <label>
                   <input type="checkbox" > Compare mode
                 </label>
@@ -35,12 +40,15 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xs-12">
-            
+
           </div>
 
         </div>
 
       </div>
+    </div>
+    <div class="bottom-panel">
+      <span id="close" class="og-close"></span>
     </div>
 
   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -60,11 +68,20 @@
       ////setTimeout(function(){console.log("hello");},3000);
       setTimeout(function(){$('.loading-screen').toggleClass('visible')},500);
 
-      $('#compareSwitch input[type="checkbox"]').change(function(ev) {
+      $('#leftPanelSwitch input[type="checkbox"]').change(function(ev) {
 
         $(".panel.panel-left").toggleClass("visible");
 
       });
+      $('#bottomPanelSwitch input[type="checkbox"]').change(function(ev) {
+
+        $(".bottom-panel").toggleClass("visible");
+
+      });
+
+      $("#close").click(function(){
+        $(".bottom-panel").toggleClass("visible");
+      })
 
     });
   </script>

@@ -135,7 +135,7 @@
   width : 20%;
   height : 100%;
   position : fixed;
-  background-color : #3D4149;
+  background-color : #262A33;
   color : white;
 }
 
@@ -168,4 +168,52 @@
 
 #toggle-button .togglebutton .toggle {
   float: right;
+}
+
+.og-close {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.og-close::before,
+.og-close::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    height: 1px;
+    background: white;
+    transform: rotate(45deg);
+}
+
+.og-close::after {
+    transform: rotate(-45deg);
+}
+
+.og-close:hover::before,
+.og-close:hover::after {
+    background: #333;
+}
+
+
+.bottom-panel{
+  position : fixed;
+  width : 20%;
+  height : 100%;
+  background-color : #1D2027;
+  z-index : 1000;
+  transition : all 0.3s ease-in-out;
+  -webkit-transition :  all 0.3s ease-in-out;
+  bottom : -100%;
+  text-align : center;
+  padding : 2px 5px 5px 2px;
+}
+
+.bottom-panel.visible{
+  width : 100%;
+  bottom : 0%;
 }
