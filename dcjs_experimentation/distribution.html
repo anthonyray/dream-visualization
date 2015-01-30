@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/dcjs/dc.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+
+    <div id="fluctuation-chart"></div>
+    <div id="chart-ring-gender"></div>
+    <div id="chart-row-education"></div>
+    <div id="chart-ring-status"></div>
+
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/crossfilter/crossfilter.js"></script>
+    <script src="bower_components/dcjs/dc.js"></script>
+    <script>
+
+    // chargement du .csv
+    var url = "data/wordcount_v2.csv";
+
+    // choix du mot-filtre
+    var tokenToFilter = "get";
+
+    d3.csv(url, function(data) {
+
+    var ndx = crossfilter(data);
+
+    // nombre total de mots
+    var tokenDim = ndx.dimension(function(d) {return d.token;});
+    var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
+    // nombre de lignes filtrées TO DO: si n=0 ??
+    var filteredToken = tokenDim.filter(tokenToFilter);
+    var n = filteredToken.top(Infinity).length;
+    //var n = data.length
+
+    var educationDim  = ndx.dimension(function(d) {return d.education;});
+    var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
+    var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
+
+    var genderDim  = ndx.dimension(function(d) {return d.gender;});
+    var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
+    var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
+
+    var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
+    var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
+    var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
+
+    var ageDim  = ndx.dimension(function(d) {return +d.age;});
+    var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
+    var age_freq = ageDim.group().reduceSum(function(d) {return +d.values;});
+
+    var minAge = ageDim.bottom(1)[0].age;
+    var maxAge = ageDim.top(1)[0].age;
+
+    // afficher un titre
+    var fluctuationChart = dc.barChart('#fluctuation-chart');
+    fluctuationChart
+     .width(420).height(180)
+     .gap(60)
+     //.margins({top: 10, right: 50, bottom: 30, left: 40})
+     .dimension(ageDim)
+     .group(age_freq)
+     .x(d3.scale.linear().domain([minAge,maxAge]))
+     .xUnits(function(){return 5;})
+     .elasticY(true)
+     .xAxis().tickFormat();  
+
+    // pie char of gender
+    var genderRingChart   = dc.pieChart("#chart-ring-gender");
+    genderRingChart
+    .width(100).height(100)
+    .dimension(genderDim)
+    .group(gender_freq)
+    .innerRadius(10);
+
+    // bar chart of education
+    var educationRowChart = dc.rowChart("#chart-row-education");
+    educationRowChart
+    .width(350).height(200)
+    .dimension(educationDim)
+    .group(education_freq)
+    .elasticX(true);
+
+    // pie chart of marital status
+    var genderRingChart   = dc.pieChart("#chart-ring-status");
+    genderRingChart
+    .width(100).height(100)
+    .dimension(maritalDim)
+    .group(marital_freq)
+    .innerRadius(10);
+
+    dc.renderAll();
+
+});
+
+    </script>
+  </body>
+</html>
