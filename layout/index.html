@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Dream Visualization</title>
+    <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
@@ -203,36 +204,8 @@
   function showWord(e){
     $("#displayed-word").text(e.text)
     $(".bottom-panel").toggleClass("visible");
-
   }
-  //Color scale for d3
-  var fill = d3.scale.category10();
 
-  var truc = ["than", "cat", "world", "plop", "lol"];
-  var cooc = [1.0, 20.5, 10, 4, 100]
-
-
-  ar = ["than", "cat", "world"]
-
-  //Configuration of the cloud
-  d3.layout.cloud().size([1000, 1000])
-      .words(truc.map(function(d) {
-          return {
-              text: d,
-              size: 1 + cooc[truc.indexOf(d)]
-          };
-      }))
-      .padding(1)
-      .rotate(function() {
-          return ~~(Math.random() * 2) * 90;
-      })
-      .font("Impact")
-      .fontSize(function(d) {
-          return d.size;
-      })
-      .on("end", draw)
-      .start();
-  //Drawing function
   function draw(words) {
       d3.select("#wordcloud").append("svg")
           .attr("width", 1000)
@@ -248,12 +221,7 @@
           })
           .style("font-family", "RobotoDraft")
           .style("fill", function(d, i) {
-              var arraycontainstest = (ar.indexOf(d.text.toLowerCase()) > -1);
-              if (arraycontainstest) {
-                  return fill(0);
-              } else if (i % 10 != 0) {
-                  return fill(i);
-              } else {}
+              return fill(i);
           })
           .attr("text-anchor", "middle")
           .attr("transform", function(d) {
@@ -263,84 +231,119 @@
               return d.text;
           });
   }
-  </script>
-  <script>
 
-  // chargement du .csv
-  var url = "data/wordcount_v2.csv";
 
-  // choix du mot-filtre
-  var tokenToFilter = "get";
+  //Color scale for d3
+  var fill = d3.scale.category10();
 
-  d3.csv(url, function(data) {
+  var tokenToFilter = "get"; // Filter le mot
+  //Configuration of the cloud
+
+  d3.csv('data/wordcount_v2.csv',function(data){
+
+
     var ndx = crossfilter(data);
-    // nombre total de mots
-    var tokenDim = ndx.dimension(function(d) {return d.token;});
-    var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
-    // nombre de lignes filtrées TO DO: si n=0 ??
-    var filteredToken = tokenDim.filter(tokenToFilter);
-    var n = filteredToken.top(Infinity).length;
-    //var n = data.length
+    var tokenDim = ndx.dimension(function(d) {return d.token;}).filter().top(10);
+    var valuesDim = ndx.dimension(function(d){return d.values});
 
-    var educationDim  = ndx.dimension(function(d) {return d.education;});
-    var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
-    var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
+    console.log(tokenDim);
 
-    var genderDim  = ndx.dimension(function(d) {return d.gender;});
-    var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
-    var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
+    d3.layout.cloud().size([1000, 1000])
+        .words(tokenDim.map(function(d) {
+            return {
+                text: d,
+                size: 1 + valuesDim[tokenDim.indexOf(d)]
+            };
+        }))
+        .padding(1)
+        .rotate(function() {
+            return ~~(Math.random() * 2) * 90;
+        })
+        .font("Impact")
+        .fontSize(function(d) {
+            return d.size;
+        })
+        .on("end", draw)
+        .start();
 
-    var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
-    var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
-    var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
 
-    var ageDim  = ndx.dimension(function(d) {return +d.age;});
-    var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
-    var age_freq = ageDim.group().reduceSum(function(d) {return +d.values;});
+        // nombre total de mots
+        //var tokenDim = ndx.dimension(function(d) {return d.token;});
+        var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
+        // nombre de lignes filtrées TO DO: si n=0 ??
+        var filteredToken = tokenDim.filter(tokenToFilter);
+        var n = filteredToken.top(Infinity).length;
+        //var n = data.length
 
-    var minAge = ageDim.bottom(1)[0].age;
-    var maxAge = ageDim.top(1)[0].age;
+        var educationDim  = ndx.dimension(function(d) {return d.education;});
+        var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
+        var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
 
-  // afficher un titre
-    var fluctuationChart = dc.barChart('#fluctuation-chart');
-      fluctuationChart
-      .width(420).height(180)
-      .gap(60)
-    //.margins({top: 10, right: 50, bottom: 30, left: 40})
-      .dimension(ageDim)
-      .group(age_freq)
-      .x(d3.scale.linear().domain([minAge,maxAge]))
-      .xUnits(function(){return 5;})
-      .elasticY(true)
-      .xAxis().tickFormat();
+        var genderDim  = ndx.dimension(function(d) {return d.gender;});
+        var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
+        var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
 
-  // pie char of gender
-  var genderRingChart = dc.pieChart("#chart-ring-gender");
-    genderRingChart
-    .width(100).height(100)
-    .dimension(genderDim)
-    .group(gender_freq)
-    .innerRadius(10);
+        var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
+        var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
+        var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
 
-  // bar chart of education
-  var educationRowChart = dc.rowChart("#chart-row-education");
-    educationRowChart
-    .width(350).height(200)
-    .dimension(educationDim)
-    .group(education_freq)
-    .elasticX(true);
+        var ageDim  = ndx.dimension(function(d) {return +d.age;});
+        var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
+        var age_freq = ageDim.group().reduceSum(function(d) {return +d.values;});
 
-  // pie chart of marital status
-  var genderRingChart   = dc.pieChart("#chart-ring-status");
-  genderRingChart
-  .width(100).height(100)
-  .dimension(maritalDim)
-  .group(marital_freq)
-  .innerRadius(10);
+        var minAge = ageDim.bottom(1)[0].age;
+        var maxAge = ageDim.top(1)[0].age;
 
-  dc.renderAll();
+      // afficher un titre
+        var fluctuationChart = dc.barChart('#fluctuation-chart');
+          fluctuationChart
+          .width(420).height(180)
+          .gap(60)
+        //.margins({top: 10, right: 50, bottom: 30, left: 40})
+          .dimension(ageDim)
+          .group(age_freq)
+          .x(d3.scale.linear().domain([minAge,maxAge]))
+          .xUnits(function(){return 5;})
+          .elasticY(true)
+          .xAxis().tickFormat();
 
-});
+      // pie char of gender
+      var genderRingChart = dc.pieChart("#chart-ring-gender");
+        genderRingChart
+        .width(100).height(100)
+        .dimension(genderDim)
+        .group(gender_freq)
+        .innerRadius(10);
+
+      // bar chart of education
+      var educationRowChart = dc.rowChart("#chart-row-education");
+        educationRowChart
+        .width(350).height(200)
+        .dimension(educationDim)
+        .group(education_freq)
+        .elasticX(true);
+
+      // pie chart of marital status
+      var genderRingChart   = dc.pieChart("#chart-ring-status");
+      genderRingChart
+      .width(100).height(100)
+      .dimension(maritalDim)
+      .group(marital_freq)
+      .innerRadius(10);
+
+      dc.renderAll();
+
+
+
+
+
+
+  }
+  );
+
+
+
+
 
   </script>
   </body>
