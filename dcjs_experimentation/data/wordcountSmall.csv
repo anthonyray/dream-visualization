@@ -1,0 +1,101 @@
+id,gender,age,marital_status,education,token,values
+0,Male,44.0,Married,"Completed some college, but no degree",memoraialble,1
+1,Male,44.0,Married,"Completed some college, but no degree",light,1
+2,Male,44.0,Married,"Completed some college, but no degree",sleeper,1
+3,Male,44.0,Married,"Completed some college, but no degree",sleep,1
+4,Male,44.0,Married,"Completed some college, but no degree",short,1
+5,Male,44.0,Married,"Completed some college, but no degree",duration,1
+6,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",really,1
+7,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",would,1
+8,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",like,1
+9,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",would,1
+10,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",like,1
+11,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",say,1
+12,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",enjoy,1
+13,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",get,1
+14,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",night,1
+15,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",use,1
+16,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",bathroom,1
+17,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",back,1
+18,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",bed,1
+19,Female,72.0,Married,"High school graduate or equivalent (e.g., GED)",finish,1
+20,Female,32.0,"Single, never married","Completed some college, but no degree",unable,1
+21,Female,32.0,"Single, never married","Completed some college, but no degree",move,1
+22,Female,32.0,"Single, never married","Completed some college, but no degree",could,1
+23,Female,32.0,"Single, never married","Completed some college, but no degree",barely,1
+24,Female,32.0,"Single, never married","Completed some college, but no degree",lift,1
+25,Female,32.0,"Single, never married","Completed some college, but no degree",head,1
+26,Female,32.0,"Single, never married","Completed some college, but no degree",could,1
+27,Female,32.0,"Single, never married","Completed some college, but no degree",see,1
+28,Female,32.0,"Single, never married","Completed some college, but no degree",cover,1
+29,Female,32.0,"Single, never married","Completed some college, but no degree",spider,1
+30,Female,32.0,"Single, never married","Completed some college, but no degree",web,1
+31,Female,32.0,"Single, never married","Completed some college, but no degree",pin,1
+32,Female,32.0,"Single, never married","Completed some college, but no degree",bed,1
+33,Female,32.0,"Single, never married","Completed some college, but no degree",web,1
+34,Female,32.0,"Single, never married","Completed some college, but no degree",even,1
+35,Female,32.0,"Single, never married","Completed some college, but no degree",mouth,1
+36,Female,32.0,"Single, never married","Completed some college, but no degree",make,1
+37,Female,32.0,"Single, never married","Completed some college, but no degree",panic,1
+38,Male,22.0,"Single, never married",Associate's degree,little,1
+39,Male,22.0,"Single, never married",Associate's degree,want,1
+40,Male,22.0,"Single, never married",Associate's degree,say,1
+41,Male,22.0,"Single, never married",Associate's degree,5,1
+42,Male,22.0,"Single, never married",Associate's degree,6,1
+43,Male,22.0,"Single, never married",Associate's degree,year,1
+44,Male,22.0,"Single, never married",Associate's degree,old,1
+45,Male,22.0,"Single, never married",Associate's degree,interest,1
+46,Male,22.0,"Single, never married",Associate's degree,felt,1
+47,Male,22.0,"Single, never married",Associate's degree,life-like,1
+48,Male,22.0,"Single, never married",Associate's degree,bed,1
+49,Male,22.0,"Single, never married",Associate's degree,keep,1
+50,Male,22.0,"Single, never married",Associate's degree,see,1
+51,Male,22.0,"Single, never married",Associate's degree,different,1
+52,Male,22.0,"Single, never married",Associate's degree,form,1
+53,Male,22.0,"Single, never married",Associate's degree,animation,1
+54,Male,22.0,"Single, never married",Associate's degree,throughout,1
+55,Male,22.0,"Single, never married",Associate's degree,bedroom,1
+56,Male,22.0,"Single, never married",Associate's degree,actually,1
+57,Male,22.0,"Single, never married",Associate's degree,parent,1
+58,Male,22.0,"Single, never married",Associate's degree,bedroom,1
+59,Male,22.0,"Single, never married",Associate's degree,probably,1
+60,Male,22.0,"Single, never married",Associate's degree,want,1
+61,Male,22.0,"Single, never married",Associate's degree,sleep,1
+62,Male,22.0,"Single, never married",Associate's degree,bedroom,1
+63,Male,22.0,"Single, never married",Associate's degree,weird,1
+64,Male,22.0,"Single, never married",Associate's degree,felt,1
+65,Male,22.0,"Single, never married",Associate's degree,like,1
+66,Male,22.0,"Single, never married",Associate's degree,awake,1
+67,Male,22.0,"Single, never married",Associate's degree,start,1
+68,Male,22.0,"Single, never married",Associate's degree,cartoon,1
+69,Male,22.0,"Single, never married",Associate's degree,charater,1
+70,Male,22.0,"Single, never married",Associate's degree,image,1
+71,Male,22.0,"Single, never married",Associate's degree,saw,1
+72,Male,22.0,"Single, never married",Associate's degree,character,1
+73,Male,22.0,"Single, never married",Associate's degree,run,1
+74,Male,22.0,"Single, never married",Associate's degree,pillow,1
+75,Male,22.0,"Single, never married",Associate's degree,saw,1
+76,Male,22.0,"Single, never married",Associate's degree,light,1
+77,Male,22.0,"Single, never married",Associate's degree,come,1
+78,Male,22.0,"Single, never married",Associate's degree,outside,1
+79,Male,22.0,"Single, never married",Associate's degree,seem,1
+80,Male,22.0,"Single, never married",Associate's degree,like,1
+81,Male,22.0,"Single, never married",Associate's degree,spaceship,1
+82,Male,22.0,"Single, never married",Associate's degree,keep,1
+83,Male,22.0,"Single, never married",Associate's degree,see,1
+84,Male,22.0,"Single, never married",Associate's degree,animation,1
+85,Male,22.0,"Single, never married",Associate's degree,throughout,1
+86,Male,22.0,"Single, never married",Associate's degree,wall,1
+87,Male,22.0,"Single, never married",Associate's degree,bedroom,1
+88,Male,22.0,"Single, never married",Associate's degree,22,1
+89,Male,22.0,"Single, never married",Associate's degree,still,1
+90,Male,22.0,"Single, never married",Associate's degree,becuase,1
+91,Male,22.0,"Single, never married",Associate's degree,like,1
+92,Male,22.0,"Single, never married",Associate's degree,say,1
+93,Male,22.0,"Single, never married",Associate's degree,felt,1
+94,Male,22.0,"Single, never married",Associate's degree,real,1
+95,Male,22.0,"Single, never married",Associate's degree,day,1
+96,Male,22.0,"Single, never married",Associate's degree,find,1
+97,Male,22.0,"Single, never married",Associate's degree,weird,1
+98,Male,22.0,"Single, never married",Associate's degree,end,1
+99,Male,22.0,"Single, never married",Associate's degree,get,1
