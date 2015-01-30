@@ -4,6 +4,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
+    <!-- <link href="bower_components/flatui/css/flat-ui.css"> -->
+    <link href="bower_components/nouislider/distribute/jquery.nouislider.min.css">
+    <link href="bower_components/nouislider/distribute/jquery.nouislider.pips.min.css">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
@@ -15,36 +18,113 @@
         <span class="loader"><span class="loader-inner"></span></span>
 
     </div>
+
     <div class="panel panel-right">
       <div class="container-fluid">
         <div class="row">
           <div class="col-xs-12">
-            <br>
-            <div id="leftPanelSwitch" class="togglebutton">
-                <label>
-                  <input type="checkbox" > Compare mode
-                </label>
-            </div>
-            <div id="bottomPanelSwitch" class="togglebutton">
-                <label>
-                  <input type="checkbox" > Make bottom panel appear
-                </label>
-            </div>
-          </div>
+                <br>
+                <div class="togglebutton">
+                  <label>
+                    <input type="checkbox" checked data-toggle="switch" id="custom-switch-01" />
+                  </label>
+                  <h8>COMPARISON MODE</h8>
+                </div>
+
+                <div class="slider" id="AgeFilter">
+                  <h5>Age Range :</h5>
+                      <div id="disp">
+                        <span id="displower"></span>-<span id="disphigher"></span>
+                      </div>
+
+                      <div id="AgeSlider">
+
+                      </div>
+                </div>
+
+                  <h5>Gender</h5>
+                  <form class="form-horizontal" role="form">
+                    <fieldset>
+                    <div class="form-group">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Male
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Female
+                        </label>
+                      </div>
+
+
+                    </div>
+                  </fieldset>
+                  </form>
+                  <h5>Marital Status</h5>
+                  <form class="form-horizontal" role="form">
+                    <fieldset>
+                    <div class="form-group">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Single
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Married
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Divorced
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Widow(er)
+                        </label>
+                      </div>
+
+
+                    </div>
+                  </fieldset>
+                  </form>
+                  <h5>Education</h5>
+                  <form class="form-horizontal" role="form">
+                    <fieldset>
+                    <div class="form-group">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Less than High School
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> High School Degree
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">Associate/Bachelor Degree
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> MS/PhD
+                        </label>
+                      </div>
+
+                    </div>
+                  </fieldset>
+                  </form>
+
+
+
+
 
         </div>
-
       </div>
-    </div>
-    <div class="panel panel-left">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12">
-
-          </div>
-
-        </div>
-
       </div>
     </div>
     <div class="bottom-panel">
@@ -58,15 +138,16 @@
 
   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
   <script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
   <script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+  <script src="bower_components/nouislider/distribute/jquery.nouislider.all.min.js"></script>
+
   <script>
       $(document).ready(function() {
           $.material.init();
-
       });
   </script>
+
   <script charset="utf-8">
     $(document).ready(function(){
 
@@ -89,6 +170,22 @@
       })
 
     });
+  </script>
+
+  <script>
+    $("#AgeSlider").noUiSlider({
+      start: [20, 80],
+      connect: true,
+      step: 1,
+      range: {
+        'min': 7,
+        'max': 77
+      }
+    });
+
+
+    $('#AgeSlider').Link('lower').to($('#displower'));
+    $('#AgeSlider').Link('upper').to($('#disphigher'));
   </script>
   </body>
 </html>

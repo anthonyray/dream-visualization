@@ -212,11 +212,20 @@
   transition : all 0.3s ease-in-out;
   -webkit-transition :  all 0.3s ease-in-out;
   bottom : -100%;
-
+  color : white;
   padding : 2px 5px 5px 2px;
 }
 
 .bottom-panel.visible{
   width : 100%;
   bottom : 0%;
+}
+
+
+.form-horizontal .checkbox{
+  padding-top:0px;
+}
+
+.slider{
+  background : none;
 }
