@@ -208,10 +208,10 @@
 
   function draw(words) {
       d3.select("#wordcloud").append("svg")
-          .attr("width", 1000)
-          .attr("height", 1000)
+          .attr("width", screen.availWidth)
+          .attr("height", screen.availHeight)
           .append("g")
-          .attr("transform", "translate(500,500)")
+          .attr("transform", "translate(500,350)")
           .selectAll("text")
           .data(words)
           .enter().append("text")
@@ -243,16 +243,34 @@
 
 
     var ndx = crossfilter(data);
-    var tokenDim = ndx.dimension(function(d) {return d.token;}).filter().top(10);
-    var valuesDim = ndx.dimension(function(d){return d.values});
+    var ageDim  = ndx.dimension(function(d) {return +d.age;}).filterExact(95);
+    var genderDim  = ndx.dimension(function(d) {return d.gender;}).filterExact("Male");
+    var wordsDim = ndx.dimension(function(d) {return d.token;});
+    var words_total = wordsDim.group().reduceSum(function(d){ return +d.values;});
 
-    console.log(tokenDim);
+/*
+    var educationDim  = ndx.dimension(function(d) {return d.education;});
+    var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
+    var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
 
-    d3.layout.cloud().size([1000, 1000])
-        .words(tokenDim.map(function(d) {
+    var genderDim  = ndx.dimension(function(d) {return d.gender;}).filter(function(d){ return d.gender == "Male"});
+    var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
+    var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
+
+    var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
+    var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
+    var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
+*/
+
+    
+    var grouped = words_total.top(50)
+
+    console.log(grouped);
+    d3.layout.cloud().size([screen.availWidth, screen.availHeight])
+        .words(grouped.map(function(d) {
             return {
-                text: d,
-                size: 1 + valuesDim[tokenDim.indexOf(d)]
+                text: d.key,
+                size: 20 + d.value/100
             };
         }))
         .padding(1)
@@ -267,6 +285,7 @@
         .start();
 
 
+        /*
         // nombre total de mots
         //var tokenDim = ndx.dimension(function(d) {return d.token;});
         var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
@@ -333,9 +352,7 @@
 
       dc.renderAll();
 
-
-
-
+*/
 
 
   }
