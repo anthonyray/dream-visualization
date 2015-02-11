@@ -140,7 +140,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h1 id="displayed-word"> Word </h1>
-          <span id="close" class="og-close"></span>
+          <span id="close" class="og-close" onClick="tokenDim.filter(null);"></span>
           <div id="fluctuation-chart"></div>
           <div id="chart-ring-gender"></div>
           <div id="chart-row-education"></div>
@@ -208,13 +208,14 @@
   </script>
   <script charset="utf-8">
     var ndx;
+	var tokenDim;
+	var filteredToken;
     var genderDim;
     var maritalDim;
     var educationDim;
 	var ageDim;
     var minAge;
     var maxAge;
-	var wordsDim;
 	var words_total;
 	var grouped;
 
@@ -286,10 +287,11 @@
 
     function DrawCharts(tokenToFilter){
       console.log(tokenToFilter)
-      var tokenDim = ndx.dimension(function(d) {return d.token;});
-      var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
+      tokenDim.filter(null)
+	  tokenDim = ndx.dimension(function(d) {return d.token;});
+	  var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
       // nombre de lignes filtrées TO DO: si n=0 ??
-      var filteredToken = tokenDim.filter(tokenToFilter);
+      filteredToken = tokenDim.filter(tokenToFilter);
       var n = filteredToken.top(Infinity).length;
       //var n = data.length
 
@@ -353,7 +355,7 @@
 
       dc.renderAll();
 
-      tokenDim.filter(null)
+      //tokenDim.filter(null)
     }
 
 
@@ -378,10 +380,10 @@
 	  educationDim = ndx.dimension(function(d) {
         return d.education;
       });
-      wordsDim = ndx.dimension(function(d) {
+      tokenDim = ndx.dimension(function(d) {
         return d.token;
       });
-      words_total = wordsDim.group().reduceSum(function(d) {
+      words_total = tokenDim.group().reduceSum(function(d) {
         return +d.values;
       });
       grouped = words_total.top(20)
@@ -422,7 +424,7 @@
 		if(DivorcedChecked){maritalStatus.push("Divorced");}
 		if(WidowedChecked){maritalStatus.push("Widowed");}
 		if(maritalStatus.length ==0){maritalStatus = ["Single","Married","Divorced","Widowed"];}
-		console.log(maritalStatus);
+		//console.log(maritalStatus);
 		maritalDim.filter(null);
 		maritalDim.filter(function(d){
 			return maritalStatus.indexOf(d) > -1;
@@ -443,7 +445,7 @@
 		if(bcChecked){educationStatus.push("Associate/Bachelor Degree");}
 		if(phChecked){educationStatus.push("MS/PhD");}
 		if(educationStatus.length ==0){educationStatus = ["Less than High School","High School degree","Associate/Bachelor Degree","MS/PhD"];}
-		console.log(educationStatus);
+		//console.log(educationStatus);
 		educationDim.filter(null);
 		educationDim.filter(function(d){
 			return educationStatus.indexOf(d) > -1;
