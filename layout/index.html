@@ -211,6 +211,7 @@
       $("#displayed-word").text(e.text)
       $(".bottom-panel").toggleClass("visible");
       tokenToFilter=e.text
+      console.log(ageDim.bottom(1))
       DrawCharts(e.text)
 
     }
@@ -270,8 +271,9 @@
     var ndx;
     var genderDim;
     var maritalDim;
-    var ageDim
-
+    var ageDim;
+    var minAge;
+    var maxAge;
     function DrawCharts(tokenToFilter){
       console.log(tokenToFilter)
       var tokenDim = ndx.dimension(function(d) {return d.token;});
@@ -299,13 +301,10 @@
       var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
       var age_freq = ageDim.group().reduceSum(function(d) {return +d.values/n;});
 
-      console.log(ageDim)
-      var minAge = ageDim.bottom(1)[0].age;
-      var maxAge = ageDim.top(1)[0].age;
+      minAge = ageDim.bottom(1)[0].age;
+      maxAge = ageDim.top(1)[0].age;
 
       // afficher un titre
-      console.log(minAge)
-      console.log(maxAge)
       var fluctuationChart = dc.barChart('#fluctuation-chart');
       fluctuationChart
       .width(420).height(180)
@@ -344,10 +343,11 @@
 
       dc.renderAll();
 
-
+      tokenDim.filter(null)
     }
 
 
+    console.log("1: "+ageDim)
     //Color scale for d3
     var fill = d3.scale.category10();
     //var tokenToFilter = "get"; // Filter le mot
@@ -360,7 +360,7 @@
       ndx = crossfilter(data);
       ageDim = ndx.dimension(function(d) {
         return +d.age;
-      }).filterExact(50);
+      })//.filterExact(50);
       //var Bobby = $('#genderMale').change(function(){if (!this.checked){return "Male";};console.log("MAleeeee");})
 
        genderDim = ndx.dimension(function(d) {
