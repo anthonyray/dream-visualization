@@ -361,11 +361,12 @@
 
     console.log("1: "+ageDim)
     //Color scale for d3
-    var fill = d3.scale.ordinal().range(["#1abc9c","#16a085","#2c3e50","#34495e","#7f8c8d","#2ecc71","#27ae60"])
-    //var tokenToFilter = "get"; // Filter le mot
-    var tokenToFilter
+    //var fill = d3.scale.ordinal().range(["#1abc9c","#16a085","#2c3e50","#34495e","#7f8c8d","#2ecc71","#27ae60"])
+    var fill = d3.scale.linear(function(d){return d.size;}).domain([15, 35, 132]).range(["#43719e", "#2ecc71", "#93ffbc"]).interpolate(d3.interpolateHcl);
+	//var tokenToFilter = "get"; // Filter le mot
+    var tokenToFilter;
+	
     //Configuration of the cloud
-
     d3.csv('data/wordcount_v2.csv', function(data) {
       ndx = crossfilter(data);
       ageDim = ndx.dimension(function(d) {
