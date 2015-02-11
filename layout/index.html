@@ -207,7 +207,17 @@
     $('#AgeSlider').Link('upper').to($('#disphigher'));
   </script>
   <script charset="utf-8">
-    function showWord(e) {
+    var ndx;
+    var genderDim;
+    var maritalDim;
+    var ageDim;
+    var minAge;
+    var maxAge;
+	var wordsDim;
+	var words_total;
+	var grouped;
+
+  function showWord(e) {
       $("#displayed-word").text(e.text)
       $(".bottom-panel").toggleClass("visible");
       tokenToFilter=e.text
@@ -217,6 +227,9 @@
     }
 
     function draw(words) {
+	  if(d3.select('#wordcloud').selectAll("svg")[0].length>0){
+		d3.select("#wordcloud").select("svg").remove();
+	  }
       d3.select("#wordcloud").append("svg")
         .attr("width", screen.availWidth)
         .attr("height", screen.availHeight)
@@ -268,12 +281,8 @@
       .on("end", draw)
       .start();
     }
-    var ndx;
-    var genderDim;
-    var maritalDim;
-    var ageDim;
-    var minAge;
-    var maxAge;
+ 
+	
     function DrawCharts(tokenToFilter){
       console.log(tokenToFilter)
       var tokenDim = ndx.dimension(function(d) {return d.token;});
@@ -353,82 +362,46 @@
     //var tokenToFilter = "get"; // Filter le mot
     var tokenToFilter
     //Configuration of the cloud
-
+	
     d3.csv('data/wordcount_v2.csv', function(data) {
-
-
       ndx = crossfilter(data);
       ageDim = ndx.dimension(function(d) {
         return +d.age;
-      })//.filterExact(50);
-      //var Bobby = $('#genderMale').change(function(){if (!this.checked){return "Male";};console.log("MAleeeee");})
-
+      });//.filterExact(50);
        genderDim = ndx.dimension(function(d) {
         return d.gender;
       }).filter("Female");
-      var wordsDim = ndx.dimension(function(d) {
+      wordsDim = ndx.dimension(function(d) {
         return d.token;
       });
-      var words_total = wordsDim.group().reduceSum(function(d) {
+      words_total = wordsDim.group().reduceSum(function(d) {
         return +d.values;
       });
-      console.log($('#genderMale').val())
-//$('#genderMale').change(function(){if (this.checked){console.log("MAleeeee");return "Male";}})
-//$('#genderMale').change(function(){if (!this.checked){return "Male";} bigDraw(grouped);console.log("MAleeeee");})
-
-          /*
-          var educationDim  = ndx.dimension(function(d) {return d.education;});
-          var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
-          var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
-
-          var genderDim  = ndx.dimension(function(d) {return d.gender;}).filter(function(d){ return d.gender == "Male"});
-          var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
-          var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
-
-          var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
-          var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
-          var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
-          */
-
-
-      var grouped = words_total.top(100)
+      grouped = words_total.top(100)
       bigDraw(grouped);
-/*
-      console.log(grouped);
-      d3.layout.cloud().size([screen.availWidth, screen.availHeight])
-        .words(grouped.map(function(d) {
-
-          console.log(d.value);
-          if (d.value > 0) {
-            return {
-
-              text: d.key,
-              size: 20 + d.value / 100
-            };
-          } else {
-            return {}
-          }
-        }))
-        .padding(1)
-        .rotate(function() {
-          return ~~(Math.random() * 2) * 90;
-        })
-        .font("Impact")
-        .fontSize(function(d) {
-          return d.size;
-        })
-        .on("end", draw)
-        .start();
-
-*/
-
-  //      function displayCharts(tokenToFilter,ndx){
-          //ndx.filter(null);
-                 // nombre ootal de mots
-
-
-
     });
+	
+	/*Selection Gender*/
+	$('#genderMale, #genderFemale').change(function(){
+	var MaleChecked = ($('#genderMale:checked').val() == "Male")
+	var FemaleChecked = ( $('#genderFemale:checked').val() =="Female")
+		if ((MaleChecked && FemaleChecked )|| (!MaleChecked && !FemaleChecked)){
+			genderDim.filter(null);
+			bigDraw(grouped);
+		}
+		
+		else if(MaleChecked){
+			genderDim.filter(null);
+			genderDim.filter("Male");
+			bigDraw(grouped);
+		}
+		else  if(FemaleChecked){
+			genderDim.filter(null);
+			genderDim.filter("Female");
+			bigDraw(grouped);
+		}
+	});
+	
   </script>
 </body>
 
