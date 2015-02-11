@@ -74,22 +74,22 @@
               <div class="form-group">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Single
+                    <input type="checkbox" id="maritalSingle" value="Single"> Single
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Married
+                    <input type="checkbox" id="maritalMarried" value="Married"> Married
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Divorced
+                    <input type="checkbox" id="maritalDivorced" value="Divorced"> Divorced
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Widow(er)
+                    <input type="checkbox" id="maritalWidow" value="Widowed"> Widow(er)
                   </label>
                 </div>
 
@@ -103,22 +103,22 @@
               <div class="form-group">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Less than High School
+                    <input type="checkbox" id="educationLess" value="Less than High School"> Less than High School
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> High School Degree
+                    <input type="checkbox" id="educationHigh" value="High School degree"> High School degree
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox">Associate/Bachelor Degree
+                    <input type="checkbox" id="educationBC" value="Associate/Bachelor Degree">Associate/Bachelor Degree
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> MS/PhD
+                    <input type="checkbox" id="educationPH" value="MS/PhD"> MS/PhD
                   </label>
                 </div>
 
@@ -210,7 +210,8 @@
     var ndx;
     var genderDim;
     var maritalDim;
-    var ageDim;
+    var educationDim;
+	var ageDim;
     var minAge;
     var maxAge;
 	var wordsDim;
@@ -292,7 +293,7 @@
       var n = filteredToken.top(Infinity).length;
       //var n = data.length
 
-      var educationDim  = ndx.dimension(function(d) {return d.education;});
+      educationDim  = ndx.dimension(function(d) {return d.education;});
       var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
       var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
 
@@ -301,7 +302,7 @@
       var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
       var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
 
-      var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
+      maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
       var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
       var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
 
@@ -367,17 +368,23 @@
       ndx = crossfilter(data);
       ageDim = ndx.dimension(function(d) {
         return +d.age;
-      });//.filterExact(50);
+      });
        genderDim = ndx.dimension(function(d) {
         return d.gender;
-      }).filter("Female");
+      });
+	  maritalDim = ndx.dimension(function(d) {
+        return d.marital_status;
+      });
+	  educationDim = ndx.dimension(function(d) {
+        return d.education;
+      });
       wordsDim = ndx.dimension(function(d) {
         return d.token;
       });
       words_total = wordsDim.group().reduceSum(function(d) {
         return +d.values;
       });
-      grouped = words_total.top(100)
+      grouped = words_total.top(20)
       bigDraw(grouped);
     });
 
@@ -400,6 +407,48 @@
 			genderDim.filter("Female");
 			bigDraw(grouped);
 		}
+	});
+	
+	/*Selection MArital Status*/
+	$('#maritalSingle, #maritalMarried, #maritalDivorced, #maritalWidow').change(function(){
+		var maritalStatus =[];
+		var SingleChecked=($('#maritalSingle:checked').val() == "Single")
+		var MarriedChecked=($('#maritalMarried:checked').val() == "Married")
+		var DivorcedChecked=($('#maritalDivorced:checked').val() == "Divorced")
+		var WidowedChecked=($('#maritalWidow:checked').val() == "Widowed")
+	
+		if(SingleChecked){maritalStatus.push("Single");}
+		if(MarriedChecked){maritalStatus.push("Married");}
+		if(DivorcedChecked){maritalStatus.push("Divorced");}
+		if(WidowedChecked){maritalStatus.push("Widowed");}
+		if(maritalStatus.length ==0){maritalStatus = ["Single","Married","Divorced","Widowed"];}
+		console.log(maritalStatus);
+		maritalDim.filter(null);
+		maritalDim.filter(function(d){
+			return maritalStatus.indexOf(d) > -1;
+		});
+		bigDraw(grouped);
+	});
+	
+	/*Selection Education Status*/
+	$('#educationLess, #educationHigh, #educationBC, #educationPH').change(function(){
+		var educationStatus =[];
+		var LessChecked=($('#educationLess:checked').val() == "Less than High School")
+		var HighChecked=($('#educationHigh:checked').val() == "High School degree")
+		var bcChecked=($('#educationBC:checked').val() == "Associate/Bachelor Degree")
+		var phChecked=($('#educationPH:checked').val() == "MS/PhD")
+	
+		if(LessChecked){educationStatus.push("Less than High School");}
+		if(HighChecked){educationStatus.push("High School degree");}
+		if(bcChecked){educationStatus.push("Associate/Bachelor Degree");}
+		if(phChecked){educationStatus.push("MS/PhD");}
+		if(educationStatus.length ==0){educationStatus = ["Less than High School","High School degree","Associate/Bachelor Degree","MS/PhD"];}
+		console.log(educationStatus);
+		educationDim.filter(null);
+		educationDim.filter(function(d){
+			return educationStatus.indexOf(d) > -1;
+		});
+		bigDraw(grouped);
 	});
 
   </script>
