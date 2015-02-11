@@ -386,7 +386,7 @@
       words_total = tokenDim.group().reduceSum(function(d) {
         return +d.values;
       });
-      grouped = words_total.top(20)
+      grouped = words_total.top(100)
       bigDraw(grouped);
     });
 
@@ -450,6 +450,14 @@
 		educationDim.filter(function(d){
 			return educationStatus.indexOf(d) > -1;
 		});
+		bigDraw(grouped);
+	});
+	
+	$('#AgeSlider').change(function(){
+		var lower = parseInt($('#AgeSlider').val()[0]);
+		var higher = parseInt($('#AgeSlider').val()[1]);
+		ageDim.filter(null);
+		ageDim.filter([lower,higher]);
 		bigDraw(grouped);
 	});
 
