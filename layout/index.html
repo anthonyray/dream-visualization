@@ -272,7 +272,7 @@
       }))
       .padding(1)
       .rotate(function() {
-        return ~~(Math.random() * 2) * 90;
+        return ~~(Math.random() * 6) * 30;
       })
       .font("Impact")
       .fontSize(function(d) {
@@ -281,8 +281,8 @@
       .on("end", draw)
       .start();
     }
- 
-	
+
+
     function DrawCharts(tokenToFilter){
       console.log(tokenToFilter)
       var tokenDim = ndx.dimension(function(d) {return d.token;});
@@ -358,11 +358,11 @@
 
     console.log("1: "+ageDim)
     //Color scale for d3
-    var fill = d3.scale.category10();
+    var fill = d3.scale.ordinal().range(["#1abc9c","#16a085","#2c3e50","#34495e","#7f8c8d","#2ecc71","#27ae60"])
     //var tokenToFilter = "get"; // Filter le mot
     var tokenToFilter
     //Configuration of the cloud
-	
+
     d3.csv('data/wordcount_v2.csv', function(data) {
       ndx = crossfilter(data);
       ageDim = ndx.dimension(function(d) {
@@ -380,7 +380,7 @@
       grouped = words_total.top(100)
       bigDraw(grouped);
     });
-	
+
 	/*Selection Gender*/
 	$('#genderMale, #genderFemale').change(function(){
 	var MaleChecked = ($('#genderMale:checked').val() == "Male")
@@ -389,7 +389,7 @@
 			genderDim.filter(null);
 			bigDraw(grouped);
 		}
-		
+
 		else if(MaleChecked){
 			genderDim.filter(null);
 			genderDim.filter("Male");
@@ -401,7 +401,7 @@
 			bigDraw(grouped);
 		}
 	});
-	
+
   </script>
 </body>
 
