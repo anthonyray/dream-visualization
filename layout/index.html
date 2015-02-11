@@ -1,125 +1,130 @@
 <html>
-  <head>
-    <title>Dream Visualization</title>
-    <meta charset="UTF-8">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
-    <link href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
-    <!-- <link href="bower_components/flatui/css/flat-ui.css"> -->
-    <link href="bower_components/nouislider/distribute/jquery.nouislider.min.css">
-    <link href="bower_components/nouislider/distribute/jquery.nouislider.pips.min.css">
-    <link rel="stylesheet" href="bower_components/dcjs/dc.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
-  </head>
-  <body>
-    <div class="loading-screen">
+
+<head>
+  <title>Dream Visualization</title>
+  <meta charset="UTF-8">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+  <link href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
+  <!-- <link href="bower_components/flatui/css/flat-ui.css"> -->
+  <link href="bower_components/nouislider/distribute/jquery.nouislider.min.css">
+  <link href="bower_components/nouislider/distribute/jquery.nouislider.pips.min.css">
+  <link rel="stylesheet" href="bower_components/dcjs/dc.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+  <div class="loading-screen">
 
 
-      <h1> DREAM VISUALIZATION </h1>
-      <h3> Loading ...</h3>
-        <span class="loader"><span class="loader-inner"></span></span>
+    <h1> DREAM VISUALIZATION </h1>
+    <h3> Loading ...</h3>
+    <span class="loader">
+      <span class="loader-inner"></span>
+    </span>
 
-    </div>
+  </div>
 
-    <div class="panel panel-right">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12">
-                <br>
-                <div class="togglebutton">
+  <div class="panel panel-right">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <br>
+          <div class="togglebutton">
+            <label>
+              <input type="checkbox" checked data-toggle="switch" id="custom-switch-01" />
+            </label>
+            <h8>COMPARISON MODE</h8>
+          </div>
+
+          <div class="slider" id="AgeFilter">
+            <h5>Age Range :</h5>
+            <div id="disp">
+              <span id="displower"></span>-
+              <span id="disphigher"></span>
+            </div>
+
+            <div id="AgeSlider">
+
+            </div>
+          </div>
+
+          <h5>Gender</h5>
+          <form class="form-horizontal" role="form" >
+            <fieldset>
+              <div class="form-group">
+                <div class="checkbox">
                   <label>
-                    <input type="checkbox" checked data-toggle="switch" id="custom-switch-01" />
+                    <input type="checkbox" id="genderMale" value="Male"> Male
                   </label>
-                  <h8>COMPARISON MODE</h8>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="genderFemale" value="Female"> Female
+                  </label>
                 </div>
 
-                <div class="slider" id="AgeFilter">
-                  <h5>Age Range :</h5>
-                      <div id="disp">
-                        <span id="displower"></span>-<span id="disphigher"></span>
-                      </div>
 
-                      <div id="AgeSlider">
-
-                      </div>
+              </div>
+            </fieldset>
+          </form>
+          <h5>Marital Status</h5>
+          <form class="form-horizontal" role="form">
+            <fieldset>
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Single
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Married
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Divorced
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Widow(er)
+                  </label>
                 </div>
 
-                  <h5>Gender</h5>
-                  <form class="form-horizontal" role="form">
-                    <fieldset>
-                    <div class="form-group">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Male
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Female
-                        </label>
-                      </div>
 
+              </div>
+            </fieldset>
+          </form>
+          <h5>Education</h5>
+          <form class="form-horizontal" role="form">
+            <fieldset>
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Less than High School
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> High School Degree
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox">Associate/Bachelor Degree
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> MS/PhD
+                  </label>
+                </div>
 
-                    </div>
-                  </fieldset>
-                  </form>
-                  <h5>Marital Status</h5>
-                  <form class="form-horizontal" role="form">
-                    <fieldset>
-                    <div class="form-group">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Single
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Married
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Divorced
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Widow(er)
-                        </label>
-                      </div>
-
-
-                    </div>
-                  </fieldset>
-                  </form>
-                  <h5>Education</h5>
-                  <form class="form-horizontal" role="form">
-                    <fieldset>
-                    <div class="form-group">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Less than High School
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> High School Degree
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox">Associate/Bachelor Degree
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> MS/PhD
-                        </label>
-                      </div>
-
-                    </div>
-                  </fieldset>
-                  </form>
+              </div>
+            </fieldset>
+          </form>
 
 
 
@@ -127,13 +132,13 @@
 
         </div>
       </div>
-      </div>
     </div>
-    <div class="bottom-panel">
+  </div>
+  <div class="bottom-panel">
 
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
           <h1 id="displayed-word"> Word </h1>
           <span id="close" class="og-close"></span>
           <div id="fluctuation-chart"></div>
@@ -141,13 +146,13 @@
           <div id="chart-row-education"></div>
           <div id="chart-ring-status"></div>
         </div>
-        </div>
       </div>
     </div>
+  </div>
 
-    <div id="wordcloud">
+  <div id="wordcloud">
 
-    </div>
+  </div>
 
   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="bower_components/d3/d3.min.js"></script>
@@ -160,16 +165,18 @@
   <script src="bower_components/nouislider/distribute/jquery.nouislider.all.min.js"></script>
 
   <script>
-      $(document).ready(function() {
-          $.material.init();
-      });
+    $(document).ready(function() {
+      $.material.init();
+    });
   </script>
 
   <script charset="utf-8">
-    $(document).ready(function(){
+    $(document).ready(function() {
 
       ////setTimeout(function(){console.log("hello");},3000);
-      setTimeout(function(){$('.loading-screen').toggleClass('visible')},500);
+      setTimeout(function() {
+        $('.loading-screen').toggleClass('visible')
+      }, 500);
 
       $('#leftPanelSwitch input[type="checkbox"]').change(function(ev) {
 
@@ -177,7 +184,7 @@
 
       });
 
-      $("#close").click(function(){
+      $("#close").click(function() {
         $(".bottom-panel").toggleClass("visible");
       })
 
@@ -200,94 +207,143 @@
     $('#AgeSlider').Link('upper').to($('#disphigher'));
   </script>
   <script charset="utf-8">
+    function showWord(e) {
+      $("#displayed-word").text(e.text)
+      $(".bottom-panel").toggleClass("visible");
+    }
 
-  function showWord(e){
-    $("#displayed-word").text(e.text)
-    $(".bottom-panel").toggleClass("visible");
-  }
-
-  function draw(words) {
+    function draw(words) {
       d3.select("#wordcloud").append("svg")
-          .attr("width", screen.availWidth)
-          .attr("height", screen.availHeight)
-          .append("g")
-          .attr("transform", "translate(500,350)")
-          .selectAll("text")
-          .data(words)
-          .enter().append("text")
-          .on("click",showWord)
-          .style("font-size", function(d) {
-              return d.size + "px";
-          })
-          .style("font-family", "RobotoDraft")
-          .style("fill", function(d, i) {
-              return fill(i);
-          })
-          .attr("text-anchor", "middle")
-          .attr("transform", function(d) {
-              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-          })
-          .text(function(d) {
-              return d.text;
-          });
-  }
+        .attr("width", screen.availWidth)
+        .attr("height", screen.availHeight)
+        .append("g")
+        .attr("transform", "translate(500,350)")
+        .selectAll("text")
+        .data(words)
+        .enter().append("text")
+        .on("click", showWord)
+        .style("font-size", function(d) {
+          return d.size + "px";
+        })
+        .style("font-family", "RobotoDraft")
+        .style("fill", function(d, i) {
+          return fill(i);
+        })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) {
+          return d.text;
+        });
+    }
+    function bigDraw(grouped){
+      console.log(grouped);
+      d3.layout.cloud().size([screen.availWidth, screen.availHeight])
+      .words(grouped.map(function(d) {
+
+        console.log(d.value);
+        if (d.value > 0) {
+          return {
+
+            text: d.key,
+            size: 20 + d.value / 100
+          };
+        } else {
+          return {}
+        }
+      }))
+      .padding(1)
+      .rotate(function() {
+        return ~~(Math.random() * 2) * 90;
+      })
+      .font("Impact")
+      .fontSize(function(d) {
+        return d.size;
+      })
+      .on("end", draw)
+      .start();
+    }
 
 
-  //Color scale for d3
-  var fill = d3.scale.category10();
+    //Color scale for d3
+    var fill = d3.scale.category10();
 
-  var tokenToFilter = "get"; // Filter le mot
-  //Configuration of the cloud
+    var tokenToFilter = "get"; // Filter le mot
+    //Configuration of the cloud
 
-  d3.csv('data/wordcount_v2.csv',function(data){
+    d3.csv('data/wordcount_v2.csv', function(data) {
 
 
-    var ndx = crossfilter(data);
-    var ageDim  = ndx.dimension(function(d) {return +d.age;}).filterExact(95);
-    var genderDim  = ndx.dimension(function(d) {return d.gender;}).filterExact("Male");
-    var wordsDim = ndx.dimension(function(d) {return d.token;});
-    var words_total = wordsDim.group().reduceSum(function(d){ return +d.values;});
+      var ndx = crossfilter(data);
+      var ageDim = ndx.dimension(function(d) {
+        return +d.age;
+      }).filterExact(50);
+      //var Bobby = $('#genderMale').change(function(){if (!this.checked){return "Male";};console.log("MAleeeee");})
 
+      var genderDim = ndx.dimension(function(d) {
+        return d.gender;
+      }).filter("Female");
+      var wordsDim = ndx.dimension(function(d) {
+        return d.token;
+      });
+      var words_total = wordsDim.group().reduceSum(function(d) {
+        return +d.values;
+      });
+      console.log($('#genderMale').val())
+//$('#genderMale').change(function(){if (this.checked){console.log("MAleeeee");return "Male";}})
+//$('#genderMale').change(function(){if (!this.checked){return "Male";} bigDraw(grouped);console.log("MAleeeee");})
+
+          /*
+          var educationDim  = ndx.dimension(function(d) {return d.education;});
+          var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
+          var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
+
+          var genderDim  = ndx.dimension(function(d) {return d.gender;}).filter(function(d){ return d.gender == "Male"});
+          var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
+          var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
+
+          var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
+          var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
+          var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
+          */
+
+
+      var grouped = words_total.top(50)
+      bigDraw(grouped);
 /*
-    var educationDim  = ndx.dimension(function(d) {return d.education;});
-    var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
-    var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
-
-    var genderDim  = ndx.dimension(function(d) {return d.gender;}).filter(function(d){ return d.gender == "Male"});
-    var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
-    var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
-
-    var maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
-    var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
-    var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
-*/
-
-    
-    var grouped = words_total.top(50)
-
-    console.log(grouped);
-    d3.layout.cloud().size([screen.availWidth, screen.availHeight])
+      console.log(grouped);
+      d3.layout.cloud().size([screen.availWidth, screen.availHeight])
         .words(grouped.map(function(d) {
+
+          console.log(d.value);
+          if (d.value > 0) {
             return {
-                text: d.key,
-                size: 20 + d.value/100
+
+              text: d.key,
+              size: 20 + d.value / 100
             };
+          } else {
+            return {}
+          }
         }))
         .padding(1)
         .rotate(function() {
-            return ~~(Math.random() * 2) * 90;
+          return ~~(Math.random() * 2) * 90;
         })
         .font("Impact")
         .fontSize(function(d) {
-            return d.size;
+          return d.size;
         })
         .on("end", draw)
         .start();
 
+*/
 
-        /*
-        // nombre total de mots
-        //var tokenDim = ndx.dimension(function(d) {return d.token;});
+  //      function displayCharts(tokenToFilter,ndx){
+          //ndx.filter(null);
+                 // nombre ootal de mots
+        var tokenDim = ndx.dimension(function(d) {return d.token;});
         var m = tokenDim.groupAll().reduceSum(function(d) {return +d.values;}).value();
         // nombre de lignes filtrées TO DO: si n=0 ??
         var filteredToken = tokenDim.filter(tokenToFilter);
@@ -298,7 +354,8 @@
         var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
         var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
 
-        var genderDim  = ndx.dimension(function(d) {return d.gender;});
+//        genderDim  = ndx.dimension(function(d) {return d.gender;}).filterAll();
+        genderDim.filter(null);
         var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
         var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
 
@@ -306,21 +363,25 @@
         var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
         var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
 
-        var ageDim  = ndx.dimension(function(d) {return +d.age;});
-        var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
-        var age_freq = ageDim.group().reduceSum(function(d) {return +d.values;});
+      //vageDim  = ndx.dimension(function(d) {return +d.age;}).filterAll();
+       ageDim.filter(null);
+       var age_total = ageDim.group().reduceSum(function(d) {return +d.values;});
+        var age_freq = ageDim.group().reduceSum(function(d) {return +d.values/n;});
 
+        console.log(ageDim)
         var minAge = ageDim.bottom(1)[0].age;
         var maxAge = ageDim.top(1)[0].age;
 
       // afficher un titre
+        console.log(minAge)
+        console.log(maxAge)
         var fluctuationChart = dc.barChart('#fluctuation-chart');
           fluctuationChart
           .width(420).height(180)
           .gap(60)
         //.margins({top: 10, right: 50, bottom: 30, left: 40})
           .dimension(ageDim)
-          .group(age_freq)
+          .group(age_total)
           .x(d3.scale.linear().domain([minAge,maxAge]))
           .xUnits(function(){return 5;})
           .elasticY(true)
@@ -331,7 +392,7 @@
         genderRingChart
         .width(100).height(100)
         .dimension(genderDim)
-        .group(gender_freq)
+        .group(gender_total)
         .innerRadius(10);
 
       // bar chart of education
@@ -343,8 +404,8 @@
         .elasticX(true);
 
       // pie chart of marital status
-      var genderRingChart   = dc.pieChart("#chart-ring-status");
-      genderRingChart
+      var MaritalRingChart   = dc.pieChart("#chart-ring-status");
+      MaritalRingChart
       .width(100).height(100)
       .dimension(maritalDim)
       .group(marital_freq)
@@ -352,16 +413,11 @@
 
       dc.renderAll();
 
-*/
-
-
-  }
-  );
 
 
 
-
-
+    });
   </script>
-  </body>
+</body>
+
 </html>
