@@ -32,7 +32,7 @@
           <br>
           <div class="togglebutton">
             <label>
-              <input type="checkbox" checked data-toggle="switch" id="comparisonSwitch" />
+              <input type="checkbox"  data-toggle="switch" id="comparisonSwitch" />
             </label>
             <h8>COMPARISON MODE</h8>
           </div>
@@ -43,13 +43,13 @@
               <span id="displower"></span>-
               <span id="disphigher"></span>
             </div>
-            <div id="display2" style="display:inline;position:absolute;right:5px">
+            <div id="display2" class="compElement" style="display:inline;position:absolute;right:5px">
               <span id="displower2"></span>-
               <span id="disphigher2"></span>
             </div>
             <div id="AgeSlider">
             </div>
-            <div id="AgeSlider2">
+            <div class="compElement" id="AgeSlider2">
             </div>
           </div>
 
@@ -61,7 +61,7 @@
                   <label>
                     <input type="checkbox" id="genderMale" value="Male"> Male
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="genderMale2" value="Male">
                   </label>
                 </div>
@@ -69,7 +69,7 @@
                   <label>
                     <input type="checkbox" id="genderFemale" value="Female"> Female
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="genderFemale2" value="Female">
                   </label>
                 </div>
@@ -87,7 +87,7 @@
                     <input type="checkbox" id="maritalSingle" value="Single"> Single
                   </label>
 
-                  <label style="position:absolute;right:1px" >
+                  <label style="position:absolute;right:1px" class="compElement"  >
                     <input type="checkbox" id="maritalSingle2" value="Single">
                   </label>
                 </div>
@@ -95,7 +95,7 @@
                   <label>
                     <input type="checkbox" id="maritalMarried" value="Married"> Married
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="maritalMarried2" value="Married">
                   </label>
                 </div>
@@ -103,7 +103,7 @@
                   <label>
                     <input type="checkbox" id="maritalDivorced" value="Divorced"> Divorced
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="maritalDivorced2" value="Divorced">
                   </label>
                 </div>
@@ -111,8 +111,8 @@
                   <label>
                     <input type="checkbox" id="maritalWidow" value="Widowed"> Widow(er)
                   </label>
-                  <label style="position:absolute;right:1px">
-                    <input type="checkbox" id="maritalWidow2" value="Widowed">
+                  <label style="position:absolute;right:1px" class="compElement" >
+                    <input type="checkbox" id="maritalWidow2"  value="Widowed">
                   </label>
                 </div>
 
@@ -128,7 +128,7 @@
                   <label>
                     <input type="checkbox" id="educationLess" value="Less than High School"> Less than High School
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="educationLess2" value="Less than High School">
                   </label>
                 </div>
@@ -136,7 +136,7 @@
                   <label>
                     <input type="checkbox" id="educationHigh" value="High School degree"> High School degree
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="educationHigh2" value="High School degree">
                   </label>
                 </div>
@@ -144,7 +144,7 @@
                   <label>
                     <input type="checkbox" id="educationBC" value="Associate/Bachelor Degree">Associate/Bsc Degree
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="educationBC2" value="Associate/Bachelor Degree">
                   </label>
                 </div>
@@ -152,7 +152,7 @@
                   <label>
                     <input type="checkbox" id="educationPH" value="MS/PhD"> MS/PhD
                   </label>
-                  <label style="position:absolute;right:1px">
+                  <label style="position:absolute;right:1px" class="compElement" >
                     <input type="checkbox" id="educationPH2" value="MS/PhD">
                   </label>
                 </div>
@@ -215,12 +215,6 @@
         $('.loading-screen').toggleClass('visible')
       }, 500);
 
-      $('#leftPanelSwitch input[type="checkbox"]').change(function(ev) {
-
-        $(".panel.panel-left").toggleClass("visible");
-
-      });
-
       $("#close").click(function() {
         $(".bottom-panel").toggleClass("visible");
       })
@@ -229,6 +223,16 @@
   </script>
 
   <script>
+  $(document).ready(function(){
+  $('#comparisonSwitch').click(function(){
+    console.log("clicked")
+    $('.compElement').toggleClass('compElementVisibility')
+  });
+
+  });
+  </script>
+  <script>
+  $(document).ready(function(){
     $("#AgeSlider").noUiSlider({
       start: [20, 80],
       connect: true,
@@ -253,6 +257,7 @@
 
     $('#AgeSlider2').Link('lower').to($('#displower2'));
     $('#AgeSlider2').Link('upper').to($('#disphigher2'));
+  });
   </script>
   <script src="js/main.js">
   </script>

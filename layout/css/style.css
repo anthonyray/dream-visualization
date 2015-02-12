@@ -229,3 +229,9 @@
 .slider{
   background : none;
 }
+
+.compElementVisibility{
+
+  visibility:hidden;
+
+}
