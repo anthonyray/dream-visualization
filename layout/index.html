@@ -227,11 +227,18 @@
 
   <script>
   $(document).ready(function(){
-  $('#comparisonSwitch').click(function(){
-    console.log("clicked")
+  $('#comparisonSwitch').click(function(e){
+    console.log(e)
     $('.compElement input:checkbox').removeAttr('checked');
-    $('.compElement').toggleClass('compElementVisibility')
+    $('.compElement').toggleClass('compElementVisibility');
+    var check = $('#comparisonSwitch')[0].checked;
+    if(check){
+      $('#wordcloud2').css('display','block');
+    }else{
+      $('#wordcloud2').css('display','none');
+    }
   });
+
 
   });
   </script>

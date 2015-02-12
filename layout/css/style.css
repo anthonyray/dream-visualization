@@ -2,6 +2,10 @@
   float : left;
 }
 
+#wordcloud2{
+  display:none;
+}
+
 .loading-screen{
   position : fixed;
   width : 100%;
