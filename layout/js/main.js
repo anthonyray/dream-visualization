@@ -91,7 +91,7 @@ function DrawCharts(tokenToFilter){
   filteredToken = tokenDim.filter(tokenToFilter);
   var n = filteredToken.top(Infinity).length;
   //var n = data.length
-
+  educationDim.filter(null);
   educationDim  = ndx.dimension(function(d) {return d.education;});
   var education_total = educationDim.group().reduceSum(function(d) {return +d.values;});
   var education_freq = educationDim.group().reduceSum(function(d) {return +d.values/n;});
@@ -101,6 +101,7 @@ function DrawCharts(tokenToFilter){
   var gender_total = genderDim.group().reduceSum(function(d) {return +d.values;});
   var gender_freq = genderDim.group().reduceSum(function(d) {return +d.values/n;});
 
+  maritalDim.filter(null);
   maritalDim  = ndx.dimension(function(d) {return d.marital_status;});
   var marital_total = maritalDim.group().reduceSum(function(d) {return +d.values;});
   var marital_freq = maritalDim.group().reduceSum(function(d) {return +d.values/n;});
