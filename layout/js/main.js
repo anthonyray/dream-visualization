@@ -1,3 +1,163 @@
+function wordCloud(urldata,sizew,sizeh,id){
+  this.grouped;
+  this.layout;
+  this.background;
+  this.vis;
+  this.DOMelement;
+  this.DOMid = id;
+  this.urldata = urldata;
+  this.sizew = sizew;
+  this.sizeh = sizeh;
+  this.words;
+  this.ndx;
+  this.ageDim;
+  this.genderDim;
+  this.maritalDim;
+  this.tokenDim;
+  this.filteredToken;
+  this.educationDim;
+  this.minAge;
+  this.maxAge;
+  this.words_total;
+}
+
+wordCloud.prototype.init = function(){
+  var self = this;
+  this.layout = d3.layout.cloud();
+  //this.layout.size([screen.availWidth, screen.availHeight])
+  //console.log(this.grouped);
+  this.layout.size([this.sizew, this.sizeh])
+  this.layout.words(this.grouped.map(function(d) {
+    if (d.value > 0) {
+      return {
+        text: d.key,
+        size: 20 + d.value / 100
+      };
+    } else {
+      return {}
+    }
+  }))
+  this.layout.padding(1)
+  this.layout.rotate(function() {
+    return ~~(Math.random() * 2) * 90;
+  })
+  this.layout.font("Impact")
+  this.layout.fontSize(function(d) {
+    return d.size;
+  })
+  this.layout.on("word", function(){ console.log("word event")})
+  this.layout.on("end", function(words){
+     self.draw(words);
+  })
+  //this.layout.start();
+  this.DOMelement = d3.select(this.DOMid).append("svg");
+  this.DOMelement
+    .attr("width", screen.availWidth)
+    .attr("height", screen.availHeight)
+
+  this.background = this.DOMelement.append("g")
+  this.vis = this.DOMelement.append("g")
+  .attr("transform", "translate(500,350)")
+
+}
+
+wordCloud.prototype.update = function(){
+
+  this.layout.stop()
+  this.layout.words(this.grouped.map(function(d) {
+    if (d.value > 0) {
+      return {
+        text: d.key,
+        size: 20 + d.value / 100
+      };
+    } else {
+      return {}
+    }
+  }))
+  this.layout.start();
+}
+
+wordCloud.prototype.draw = function(words){
+
+    var text = this.vis
+    .selectAll("text")
+    .data(words);
+
+    text.transition()
+      .duration(1000)
+      .attr("transform", function(d) { return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"; })
+      .style("font-size", function(d) { return d.size + "px"; });
+
+    text.enter().append("text")
+    .on("click", showWord)
+    .style("font-size", function(d) {
+      return d.size + "px";
+    })
+    .style("font-family", "RobotoDraft")
+    .style("fill", function(d, i) {
+      return fill(i);
+    })
+    .attr("text-anchor", "middle")
+    .attr("transform", function(d) {
+      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+    })
+    .text(function(d) {
+      return d.text;
+    });
+
+    var exitGroup = this.background.append("g")
+      .attr("transform", this.vis.attr("transform"));
+    var exitGroupNode = exitGroup.node();
+    text.exit().each(function() {
+      exitGroupNode.appendChild(this);
+    });
+    exitGroup.transition()
+      .duration(1000)
+      .style("opacity", 1e-6)
+      .remove();
+
+}
+
+wordCloud.prototype.load = function(cb){
+  var self = this;
+  d3.csv(self.urldata, function(data) {
+    self.ndx = crossfilter(data);
+    self.apply_filters();
+    return cb(self);
+  });
+}
+
+wordCloud.prototype.apply_filters = function(){
+  var self = this;
+
+  self.ageDim = self.ndx.dimension(function(d) {
+    return +d.age;
+  });
+
+  self.genderDim = self.ndx.dimension(function(d) {
+    return d.gender;
+  });
+
+  self.maritalDim = self.ndx.dimension(function(d) {
+    return d.marital_status;
+  });
+
+  self.educationDim = self.ndx.dimension(function(d) {
+    return d.education;
+  });
+
+  self.tokenDim = self.ndx.dimension(function(d) {
+    return d.token;
+  });
+
+  self.words_total = self.tokenDim.group().reduceSum(function(d) {
+    return +d.values;
+  });
+
+  self.grouped = self.words_total.top(100)
+}
+
+/*
 var ndx;
 var tokenDim;
 var filteredToken;
@@ -9,12 +169,12 @@ var minAge;
 var maxAge;
 var words_total;
 var grouped;
-
+*/
 //Color scale for d3
 //var fill = d3.scale.ordinal().range(["#1abc9c","#16a085","#2c3e50","#34495e","#7f8c8d","#2ecc71","#27ae60"])
 var fill = d3.scale.linear(function(d){return d.size;}).domain([15, 35, 132]).range(["#43719e", "#2ecc71", "#93ffbc"]).interpolate(d3.interpolateHcl);
 //var tokenToFilter = "get"; // Filter le mot
-var tokenToFilter;
+//var tokenToFilter;
 
 function showWord(e) {
   $("#displayed-word").text(e.text)
@@ -157,6 +317,7 @@ function DrawCharts(tokenToFilter){
 }
 
 //Configuration of the cloud
+/*
 d3.csv('data/wordcount_v2.csv', function(data) {
   ndx = crossfilter(data);
 
@@ -188,76 +349,83 @@ d3.csv('data/wordcount_v2.csv', function(data) {
 
   bigDraw(grouped);
 });
+*/
 
-
-// Interaction
-/*Selection Gender*/
-$('#genderMale, #genderFemale').change(function(){
-  var MaleChecked = ($('#genderMale:checked').val() == "Male")
-  var FemaleChecked = ( $('#genderFemale:checked').val() =="Female")
-  if ((MaleChecked && FemaleChecked )|| (!MaleChecked && !FemaleChecked)){
-    genderDim.filter(null);
-    bigDraw(grouped);
-  }
-
-  else if(MaleChecked){
-    genderDim.filter(null);
-    genderDim.filter("Male");
-    bigDraw(grouped);
-  }
-  else  if(FemaleChecked){
-    genderDim.filter(null);
-    genderDim.filter("Female");
-    bigDraw(grouped);
-  }
+var wc1 = new wordCloud('data/wordcount_v2.csv',1000,1000,'#wordcloud');
+wc1.load(function(wc){
+  wc.init();
 });
 
-/*Selection MArital Status*/
-$('#maritalSingle, #maritalMarried, #maritalDivorced, #maritalWidow').change(function(){
-  var maritalStatus =[];
-  var SingleChecked=($('#maritalSingle:checked').val() == "Single")
-  var MarriedChecked=($('#maritalMarried:checked').val() == "Married")
-  var DivorcedChecked=($('#maritalDivorced:checked').val() == "Divorced")
-  var WidowedChecked=($('#maritalWidow:checked').val() == "Widowed")
-
-  if(SingleChecked){maritalStatus.push("Single");}
-  if(MarriedChecked){maritalStatus.push("Married");}
-  if(DivorcedChecked){maritalStatus.push("Divorced");}
-  if(WidowedChecked){maritalStatus.push("Widowed");}
-  if(maritalStatus.length ==0){maritalStatus = ["Single","Married","Divorced","Widowed"];}
-  //console.log(maritalStatus);
-  maritalDim.filter(null);
-  maritalDim.filter(function(d){
-    return maritalStatus.indexOf(d) > -1;
-  });
-  bigDraw(grouped);
-});
-
-/*Selection Education Status*/
-$('#educationLess, #educationHigh, #educationBC, #educationPH').change(function(){
-  var educationStatus =[];
-  var LessChecked=($('#educationLess:checked').val() == "Less than High School")
-  var HighChecked=($('#educationHigh:checked').val() == "High School degree")
-  var bcChecked=($('#educationBC:checked').val() == "Associate/Bachelor Degree")
-  var phChecked=($('#educationPH:checked').val() == "MS/PhD")
-
-  if(LessChecked){educationStatus.push("Less than High School");}
-  if(HighChecked){educationStatus.push("High School degree");}
-  if(bcChecked){educationStatus.push("Associate/Bachelor Degree");}
-  if(phChecked){educationStatus.push("MS/PhD");}
-  if(educationStatus.length ==0){educationStatus = ["Less than High School","High School degree","Associate/Bachelor Degree","MS/PhD"];}
-  //console.log(educationStatus);
-  educationDim.filter(null);
-  educationDim.filter(function(d){
-    return educationStatus.indexOf(d) > -1;
-  });
-  bigDraw(grouped);
-});
-
+setTimeout(function(){ wc1.layout.start()},100)
+// // Interaction
+// /*Selection Gender*/
+// $('#genderMale, #genderFemale').change(function(){
+//   var MaleChecked = ($('#genderMale:checked').val() == "Male")
+//   var FemaleChecked = ( $('#genderFemale:checked').val() =="Female")
+//   if ((MaleChecked && FemaleChecked )|| (!MaleChecked && !FemaleChecked)){
+//     genderDim.filter(null);
+//     bigDraw(grouped);
+//   }
+//
+//   else if(MaleChecked){
+//     genderDim.filter(null);
+//     genderDim.filter("Male");
+//     bigDraw(grouped);
+//   }
+//   else  if(FemaleChecked){
+//     genderDim.filter(null);
+//     genderDim.filter("Female");
+//     bigDraw(grouped);
+//   }
+// });
+//
+// /*Selection MArital Status*/
+// $('#maritalSingle, #maritalMarried, #maritalDivorced, #maritalWidow').change(function(){
+//   var maritalStatus =[];
+//   var SingleChecked=($('#maritalSingle:checked').val() == "Single")
+//   var MarriedChecked=($('#maritalMarried:checked').val() == "Married")
+//   var DivorcedChecked=($('#maritalDivorced:checked').val() == "Divorced")
+//   var WidowedChecked=($('#maritalWidow:checked').val() == "Widowed")
+//
+//   if(SingleChecked){maritalStatus.push("Single");}
+//   if(MarriedChecked){maritalStatus.push("Married");}
+//   if(DivorcedChecked){maritalStatus.push("Divorced");}
+//   if(WidowedChecked){maritalStatus.push("Widowed");}
+//   if(maritalStatus.length ==0){maritalStatus = ["Single","Married","Divorced","Widowed"];}
+//   //console.log(maritalStatus);
+//   maritalDim.filter(null);
+//   maritalDim.filter(function(d){
+//     return maritalStatus.indexOf(d) > -1;
+//   });
+//   bigDraw(grouped);
+// });
+//
+// /*Selection Education Status*/
+// $('#educationLess, #educationHigh, #educationBC, #educationPH').change(function(){
+//   var educationStatus =[];
+//   var LessChecked=($('#educationLess:checked').val() == "Less than High School")
+//   var HighChecked=($('#educationHigh:checked').val() == "High School degree")
+//   var bcChecked=($('#educationBC:checked').val() == "Associate/Bachelor Degree")
+//   var phChecked=($('#educationPH:checked').val() == "MS/PhD")
+//
+//   if(LessChecked){educationStatus.push("Less than High School");}
+//   if(HighChecked){educationStatus.push("High School degree");}
+//   if(bcChecked){educationStatus.push("Associate/Bachelor Degree");}
+//   if(phChecked){educationStatus.push("MS/PhD");}
+//   if(educationStatus.length ==0){educationStatus = ["Less than High School","High School degree","Associate/Bachelor Degree","MS/PhD"];}
+//   //console.log(educationStatus);
+//   educationDim.filter(null);
+//   educationDim.filter(function(d){
+//     return educationStatus.indexOf(d) > -1;
+//   });
+//   bigDraw(grouped);
+// });
+//
 $('#AgeSlider').change(function(){
   var lower = parseInt($('#AgeSlider').val()[0]);
   var higher = parseInt($('#AgeSlider').val()[1]);
-  ageDim.filter(null);
-  ageDim.filter([lower,higher]);
-  bigDraw(grouped);
+  console.log(wc1.ageDim)
+  wc1.ageDim.filter(null);
+  wc1.ageDim.filter([lower,higher]);
+  wc1.update();
 });
