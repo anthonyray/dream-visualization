@@ -39,28 +39,38 @@
 
           <div class="slider" id="AgeFilter">
             <h5>Age Range :</h5>
-            <div id="disp">
+            <div id="display" style="display:inline">
               <span id="displower"></span>-
               <span id="disphigher"></span>
             </div>
-
+            <div id="display2" style="display:inline;position:absolute;right:5px">
+              <span id="displower2"></span>-
+              <span id="disphigher2"></span>
+            </div>
             <div id="AgeSlider">
-
+            </div>
+            <div id="AgeSlider2">
             </div>
           </div>
 
           <h5>Gender</h5>
-          <form class="form-horizontal" role="form" >
+          <form class="form-horizontal" role="form">
             <fieldset>
               <div class="form-group">
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="genderMale" value="Male"> Male
                   </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="genderMale2" value="Male">
+                  </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="genderFemale" value="Female"> Female
+                  </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="genderFemale2" value="Female">
                   </label>
                 </div>
 
@@ -76,20 +86,33 @@
                   <label>
                     <input type="checkbox" id="maritalSingle" value="Single"> Single
                   </label>
+
+                  <label style="position:absolute;right:1px" >
+                    <input type="checkbox" id="maritalSingle2" value="Single">
+                  </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="maritalMarried" value="Married"> Married
+                  </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="maritalMarried2" value="Married">
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="maritalDivorced" value="Divorced"> Divorced
                   </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="maritalDivorced2" value="Divorced">
+                  </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="maritalWidow" value="Widowed"> Widow(er)
+                  </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="maritalWidow2" value="Widowed">
                   </label>
                 </div>
 
@@ -105,21 +128,35 @@
                   <label>
                     <input type="checkbox" id="educationLess" value="Less than High School"> Less than High School
                   </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="educationLess2" value="Less than High School">
+                  </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="educationHigh" value="High School degree"> High School degree
                   </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="educationHigh2" value="High School degree">
+                  </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="educationBC" value="Associate/Bachelor Degree">Associate/Bachelor Degree
+                    <input type="checkbox" id="educationBC" value="Associate/Bachelor Degree">Associate/Bsc Degree
+                  </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="educationBC2" value="Associate/Bachelor Degree">
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="educationPH" value="MS/PhD"> MS/PhD
                   </label>
+                  <label style="position:absolute;right:1px">
+                    <input type="checkbox" id="educationPH2" value="MS/PhD">
+                  </label>
+                </div>
+
                 </div>
 
               </div>
@@ -201,13 +238,23 @@
         'max': 77
       }
     });
-
+    $("#AgeSlider2").noUiSlider({
+      start: [20, 80],
+      connect: true,
+      step: 1,
+      range: {
+        'min': 7,
+        'max': 77
+      }
+    });
 
     $('#AgeSlider').Link('lower').to($('#displower'));
     $('#AgeSlider').Link('upper').to($('#disphigher'));
+
+    $('#AgeSlider2').Link('lower').to($('#displower2'));
+    $('#AgeSlider2').Link('upper').to($('#disphigher2'));
   </script>
   <script src="js/main.js">
-
   </script>
 </body>
 
