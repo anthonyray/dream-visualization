@@ -65,7 +65,7 @@ wordCloud.prototype.init = function(){
 }
 
 wordCloud.prototype.update = function(){
-  var scaler = d3.scale.linear().domain([0,this.grouped[0].value]).range([10,80])
+  var scaler = d3.scale.linear().domain([0,this.grouped[0].value]).range([10,70])
   this.layout.stop()
   console.log("max size :",this.grouped[0].value);
   this.layout.words(this.grouped.map(function(d) {
@@ -174,7 +174,7 @@ wordCloud.prototype.hide = function () {
 wordCloud.prototype.collapse = function () {
   this.sizew = (screen.availWidth / 2) - 10
   this.layout.stop();
-  this.layout.size([(screen.availWidth)*0.75, this.sizew]);
+  this.layout.size([(screen.availWidth)*0.75, this.sizeh]);
 
   this.DOMelement
     .attr("width",this.sizew)
