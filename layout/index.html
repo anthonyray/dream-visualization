@@ -216,7 +216,7 @@
       ////setTimeout(function(){console.log("hello");},3000);
       setTimeout(function() {
         $('.loading-screen').toggleClass('visible')
-      }, 500);
+      }, 3000);
 
       $("#close").click(function() {
         $(".bottom-panel").toggleClass("visible");
@@ -224,7 +224,8 @@
 
     });
   </script>
-
+  <script src="js/alt.js">
+  </script>
   <script>
   $(document).ready(function(){
   $('#comparisonSwitch').click(function(e){
@@ -234,6 +235,7 @@
     var check = $('#comparisonSwitch')[0].checked;
     if(check){
       $('#wordcloud2').css('display','block');
+      enableComparison()
     }else{
       $('#wordcloud2').css('display','none');
     }
@@ -270,8 +272,7 @@
     $('#AgeSlider2').Link('upper').to($('#disphigher2'));
   });
   </script>
-  <script src="js/main.js">
-  </script>
+
 </body>
 
 </html>
